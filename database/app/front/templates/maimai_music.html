@@ -1,0 +1,39 @@
+{% set title = music.title %}
+{% set section = 'maimai' %}
+{% extends "base.html" %}
+
+{% block body %}
+
+<div class="section">
+	<a href="#!" onclick="history.back()">go back</a>
+</div>
+<div class="row">
+	<h1><small><a href="{{ url_for('maimai_musics') }}?artist={{ music.artist }}">{{ music.artist }}</a> - </small>{{ music.title }}</h1>
+	<ul class="collection">
+		<li class="collection-item">Genres: {{ music.genres|join(' ') }}</li>
+	</ul>
+	<div>
+		<!--<a class="btn" href="https://remywiki.com/index.php?search={{ music.title }}">See on RemyWiki</a>-->
+		<a class="btn" href="{{ url_for('maimai_get_music', music_id=music.id) }}">
+			<i class="material-icons left">link</i> API Link
+		</a>
+	</div>
+</div>
+<div class="row cards">
+	{% for diff in music.difficulties %}
+	<div class="col s6 m4 l3">
+		<div class="card">
+			<div class="card-image">
+				<img src="{{ url_for('maimai_get_jacket', music_id=music.id) }}?fallback=default">
+			</div>
+			<div class="card-content">
+				<div>
+					<div class="diff maimai-diff-{{ diff.diff }}">{{ diff.full }}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}
